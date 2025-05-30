@@ -1,7 +1,7 @@
 package eduweb.eduweb_backend.service.impl;
 
 
-import eduweb.eduweb_backend.exception.StudentNotFoundException;
+import eduweb.eduweb_backend.exception.NotFoundException;
 import eduweb.eduweb_backend.model.Student;
 import eduweb.eduweb_backend.repository.StudentRepository;
 import eduweb.eduweb_backend.service.StudentService;
@@ -40,7 +40,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student getStudent(String ID) {
         if(studentRepository.findById(ID).isEmpty())
-            throw new StudentNotFoundException("The requested student not found");
+            throw new NotFoundException("The requested student not found");
         return studentRepository.findById(ID).get();
     }
 

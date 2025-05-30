@@ -2,14 +2,12 @@ package eduweb.eduweb_backend.exception;
 
 import org.springframework.http.HttpStatus;
 
-import java.net.http.HttpRequest;
-
-public class StudentException {
+public class Exception {
     private final String message;
     private final Throwable throwable;
     private final HttpStatus httpStatus;
 
-    public StudentException(String message, Throwable throwable, HttpStatus httpStatus) {
+    public Exception(String message, Throwable throwable, HttpStatus httpStatus) {
         this.message = message;
         this.throwable = throwable;
         this.httpStatus = httpStatus;
