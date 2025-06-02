@@ -1,11 +1,12 @@
 package eduweb.eduweb_backend.service.impl;
 
-
-import eduweb.eduweb_backend.exception.NotFoundException;
 import eduweb.eduweb_backend.model.Student;
 import eduweb.eduweb_backend.repository.StudentRepository;
+import eduweb.eduweb_backend.response.ResponseHandler;
 import eduweb.eduweb_backend.service.StudentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -20,33 +21,67 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public String createStudent(Student student) {
-        studentRepository.save(student);
-        return "create student successfully";
+    public ResponseEntity<Object> createStudent(Student student) {
+        if (studentRepository.findById(student.getId()).isEmpty()) {
+            Student savedStudent = studentRepository.save(student);
+            return ResponseHandler.responseBuilder(
+                    "Student created successfully", HttpStatus.CREATED, savedStudent
+            );
+        } else {
+            return ResponseHandler.responseBuilder(
+                    "Student already exists", HttpStatus.CONFLICT, null
+            );
+        }
     }
 
     @Override
-    public String updateStudent(Student student) {
-        studentRepository.save(student);
-        return "update student successfully";
+    public ResponseEntity<Object> updateStudent(Student student) {
+        if (studentRepository.findById(student.getId()).isEmpty()) {
+            return ResponseHandler.responseBuilder(
+                    "Student cannot find", HttpStatus.NOT_FOUND, null
+            );
+        } else {
+            Student savedStudent = studentRepository.save(student);
+            return ResponseHandler.responseBuilder(
+                    "Student updated successfully", HttpStatus.CREATED, savedStudent
+            );
+        }
     }
 
     @Override
-    public String deleteStudent(String ID) {
-        studentRepository.deleteById(ID);
-        return "delete student successfully";
+    public ResponseEntity<Object> deleteStudent(String Id) {
+        if (studentRepository.findById(Id).isEmpty()) {
+            return ResponseHandler.responseBuilder(
+                    "Student cannot find", HttpStatus.NOT_FOUND, null
+            );
+        } else {
+            studentRepository.deleteById(Id);
+            return ResponseHandler.responseBuilder(
+                    "Student deleted successfully", HttpStatus.OK, null
+            );
+        }
     }
 
     @Override
-    public Student getStudent(String ID) {
-        if(studentRepository.findById(ID).isEmpty())
-            throw new NotFoundException("The requested student not found");
-        return studentRepository.findById(ID).get();
+    public ResponseEntity<Object> getStudent(String Id) {
+        if (studentRepository.findById(Id).isEmpty()) {
+            return ResponseHandler.responseBuilder(
+                    "Student cannot find", HttpStatus.NOT_FOUND, null
+            );
+        } else {
+            Student student = studentRepository.findById(Id).get();
+            return ResponseHandler.responseBuilder(
+                    "Student find successfully", HttpStatus.FOUND, student
+            );
+        }
     }
 
     @Override
-    public List<Student> getStudents() {
-        return studentRepository.findAll();
+    public ResponseEntity<Object> getStudents() {
+        List<Student> studentList= studentRepository.findAll();
+        return ResponseHandler.responseBuilder(
+                "Students find successfully", HttpStatus.FOUND, studentList
+        );
     }
 }
 

@@ -12,11 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-        import java.util.List;
 
 @RestController
 @RequestMapping("/student")
-//@CrossOrigin("*")
 public class StudentController {
     StudentService studentService; // because these the thing talk with db
 
@@ -25,32 +23,28 @@ public class StudentController {
     }
 
     @GetMapping("{ID}")
-    public Student getStudentDetails(@PathVariable("ID") String ID) {
-//        return ResponseHandler.responseBuilder("find student", HttpStatus.OK, studentService.getStudent(ID));
+    public ResponseEntity<Object> getStudentDetails(@PathVariable("ID") String ID) {
         return studentService.getStudent(ID);
     }
 
     @GetMapping
-    public List<Student> getStudentsDetails() {
+    public ResponseEntity<Object> getStudentsDetails() {
         return studentService.getStudents();
     }
 
     @PostMapping
-    public String addStudent(@RequestBody Student student) {
-        studentService.createStudent(student);
-        return "create student successfully";
+    public ResponseEntity<Object> addStudent(@RequestBody Student student) {
+        return studentService.createStudent(student);
     }
 
     @PutMapping
-    public String updateStudentDetails(@RequestBody Student student) {
-        studentService.updateStudent(student);
-        return "update student successfully";
+    public ResponseEntity<Object> updateStudentDetails(@RequestBody Student student) {
+        return studentService.updateStudent(student);
     }
 
     @DeleteMapping("{ID}")
-    public String deleteStudent(@PathVariable("ID") String ID) {
-        studentService.deleteStudent(ID);
-        return "delete student successfully";
+    public ResponseEntity<Object> deleteStudent(@PathVariable("ID") String ID) {
+        return studentService.deleteStudent(ID);
     }
 }
 

@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 @Table(name="Student") // not essential if we do not do annotation here create table with class name "Student"
 public class Student {
     @Id
-    private String ID;
+    private String Id;
     private String name;
     private String email;
 
@@ -16,18 +16,18 @@ public class Student {
     }
 
     // constructor
-    public Student(String name, String ID, String email) {
+    public Student(String name, String Id, String email) {
         this.name = name;
-        this.ID = ID;
+        this.Id = Id;
         this.email = email;
     }
 
-    public String getID() {
-        return ID;
+    public String getId() {
+        return Id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(String Id) {
+        this.Id = Id;
     }
 
     public String getName() {
