@@ -1,11 +1,12 @@
 package eduweb.eduweb_backend.service.impl;
 
-import eduweb.eduweb_backend.exception.NotFoundException;
 import eduweb.eduweb_backend.model.User;
 import eduweb.eduweb_backend.repository.UserRepository;
 import eduweb.eduweb_backend.service.UserService;
 import org.springframework.stereotype.Service;
-
+import eduweb.eduweb_backend.response.ResponseHandler;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -18,17 +19,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String createUser(User user) {
-        userRepository.save(user);
-        return "create user successfully";
+    public ResponseEntity<Object> createUser(User user) {
+        if (userRepository.findById(user.getId()).isEmpty()) {
+            User savedUser = userRepository.save(user);
+            return ResponseHandler.responseBuilder(
+                    "User created successfully", HttpStatus.CREATED, savedUser
+            );
+        } else {
+            return ResponseHandler.responseBuilder(
+                    "Email already exists", HttpStatus.CONFLICT, null
+            );
+        }
     }
 
     @Override
-    public User getUser(String Id) {
+    public ResponseEntity<Object> getUser(String Id) {
         if (userRepository.findById(Id).isEmpty()) {
-            throw new NotFoundException("The requested user not found");
+            return ResponseHandler.responseBuilder(
+                    "User not found", HttpStatus.NOT_FOUND, null
+            );
         }
-        return userRepository.findById(Id).get();
+        User user = userRepository.findById(Id).get();
+        return ResponseHandler.responseBuilder(
+                "User found", HttpStatus.FOUND, user
+        );
     }
 
 }

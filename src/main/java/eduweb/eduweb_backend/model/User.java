@@ -11,13 +11,13 @@ public class User {
     private String Id;
     private String name;
     private String password;
-    private String role;
+    private Integer role;
     private String email;
 
     public User() {}
 
     // constructor
-    public User(String Id, String name, String password, String role, String email) {
+    public User(String Id, String name, String password, Integer role, String email) {
         this.Id = Id;
         this.name = name;
         this.email = email;
@@ -37,7 +37,7 @@ public class User {
         return password;
     }
 
-    public String getRole() {
+    public Number getRole() {
         return role;
     }
 
@@ -57,7 +57,7 @@ public class User {
         this.password = password;
     }
 
-    public void setRole(String role) {
+    public void setRole(Integer role) {
         this.role = role;
     }
 
