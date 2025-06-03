@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 public interface UserService {
 
     // concrete methods
-    public ResponseEntity<Object> createUser(User User);
+    public ResponseEntity<Object> register(User User);
     public ResponseEntity<Object> getUser(String Id);
+    public ResponseEntity<Object> login(String email, String password);
+    public ResponseEntity<Object> forgetPassword(String email, String password);
 
 }

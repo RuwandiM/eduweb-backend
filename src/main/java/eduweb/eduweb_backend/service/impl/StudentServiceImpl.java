@@ -71,7 +71,7 @@ public class StudentServiceImpl implements StudentService {
         } else {
             Student student = studentRepository.findById(Id).get();
             return ResponseHandler.responseBuilder(
-                    "Student find successfully", HttpStatus.FOUND, student
+                    "Student find successfully", HttpStatus.OK, student
             );
         }
     }
@@ -80,7 +80,7 @@ public class StudentServiceImpl implements StudentService {
     public ResponseEntity<Object> getStudents() {
         List<Student> studentList= studentRepository.findAll();
         return ResponseHandler.responseBuilder(
-                "Students find successfully", HttpStatus.FOUND, studentList
+                "Students find successfully", HttpStatus.OK, studentList
         );
     }
 }

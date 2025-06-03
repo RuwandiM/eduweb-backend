@@ -1,5 +1,6 @@
 package eduweb.eduweb_backend.controller;
 
+import eduweb.eduweb_backend.model.LoginRequest;
 import org.springframework.web.bind.annotation.*;
 
 import eduweb.eduweb_backend.service.UserService;
@@ -21,8 +22,18 @@ public class UserController {
         return userService.getUser(Id);
     }
 
-    @PostMapping
-    public ResponseEntity<Object> addUser(@RequestBody User user) {
-        return userService.createUser(user);
+    @PostMapping("/register")
+    public ResponseEntity<Object> register(@RequestBody User user) {
+        return userService.register(user);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Object> login(@RequestBody LoginRequest user) {
+        return userService.login(user.getEmail(), user.getPassword());
+    }
+
+    @PostMapping("/forgetpassword")
+    public ResponseEntity<Object> forgetpassword(@RequestBody LoginRequest user) {
+        return userService.forgetPassword(user.getEmail(), user.getPassword());
     }
 }

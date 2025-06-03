@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<Object> createUser(User user) {
+    public ResponseEntity<Object> register(User user) {
         if (userRepository.findById(user.getId()).isEmpty()) {
             User savedUser = userRepository.save(user);
             return ResponseHandler.responseBuilder(
@@ -45,4 +45,32 @@ public class UserServiceImpl implements UserService {
         );
     }
 
+    @Override
+    public ResponseEntity<Object> login(String email, String password) {
+        User user = userRepository.findByEmailAndPassword(email, password);
+        if (user == null) {
+            return ResponseHandler.responseBuilder(
+                    "User not found", HttpStatus.NOT_FOUND, null
+            );
+        }
+        return ResponseHandler.responseBuilder(
+                "User found", HttpStatus.OK, user
+        );
+    }
+
+    @Override
+    public ResponseEntity<Object> forgetPassword(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if (user ==  null) {
+            return ResponseHandler.responseBuilder(
+                    "User not found", HttpStatus.NOT_FOUND, null
+            );
+        } else {
+            user.setPassword(password);
+            User updatedUser = userRepository.save(user);
+            return ResponseHandler.responseBuilder(
+                    "User password updated successfully", HttpStatus.OK, updatedUser
+            );
+        }
+    }
 }
