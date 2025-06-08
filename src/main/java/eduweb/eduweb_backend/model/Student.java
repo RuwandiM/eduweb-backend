@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.util.List;
+
 @Entity
 @Table(name="Student") // not essential if we do not do annotation here create table with class name "Student"
 public class Student {
@@ -11,15 +13,19 @@ public class Student {
     private String Id;
     private String name;
     private String email;
+    private String stream;
+    private List<String> subjects;
 
     public Student() {
     }
 
     // constructor
-    public Student(String name, String Id, String email) {
+    public Student(String id, String name, String email, String stream, List<String> subjects) {
+        Id = id;
         this.name = name;
-        this.Id = Id;
         this.email = email;
+        this.stream = stream;
+        this.subjects = subjects;
     }
 
     public String getId() {
@@ -44,6 +50,22 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getStream() {
+        return stream;
+    }
+
+    public List<String> getSubjects() {
+        return subjects;
+    }
+
+    public void setStream(String stream) {
+        this.stream = stream;
+    }
+
+    public void setSubjects(List<String> subjects) {
+        this.subjects = subjects;
     }
 }
 
