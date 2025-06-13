@@ -32,7 +32,7 @@ public class UserController {
         return userService.login(user.getEmail(), user.getPassword());
     }
 
-    @PostMapping("/forgetpassword")
+    @PutMapping("/forgetpassword")
     public ResponseEntity<Object> forgetpassword(@RequestBody LoginRequest user) {
         return userService.forgetPassword(user.getEmail(), user.getPassword());
     }
